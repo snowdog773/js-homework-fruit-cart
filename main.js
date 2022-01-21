@@ -105,7 +105,10 @@ displayCart();
 function fruitByName(fruitName) {
 	// This FUNCTION takes a `fruitName` and returns a function
 	// to be used in an Array method later-on.
-	return fruits.some((fruitName, fruits) => { fruitName === fruits.name }) //
+	return function(fruits) {
+		return fruitName === fruits.name;
+
+	}
 		// 8. COMPARE the NAME of the fruit (fruit.name) with
 		//    the `fruitName`parameter in the parent function and
 		//    return whether or not they match.
@@ -118,30 +121,30 @@ function fruitByName(fruitName) {
 function getFruit(fruitName) {
 	// 9. CALL our `fruitByName` function, pass into it
 	//    `fruitName`, and STORE the function returned.
-
+	const funct = fruitByName(fruitName);
 	// 10. Next, we must *FIND* and RETURN a fruit from the
 	//     `fruits` array by passing the function stored above
 	//     into one of `fruits` array methods.
-	return;
+	return fruits.find(funct);
 }
 
 // CALL `getFruit` and test
-// console.log(getFruit("pineapple"));
+console.log(getFruit("pineapple"));
 
 
 
 function getCartItem(fruitName) {
 	// 11. CALL our `fruitByName` function, pass into it the
 	//     `fruitName` parameter, and STORE the function returned.
-
+	const cartFunct = fruitByName(fruitName);
 	// 12. Next, we must *FIND* and RETURN a fruit from the
 	//     `cart` array by passing the function stored above
 	//     into one of `cart`s array methods.
-	return;
+	return cart.find(cartFunct);
 }
 
 // CALL `getCartItem` and test
-// console.log(getCartItem("strawberry"));
+console.log(getCartItem("strawberry"));
 
 
 
@@ -152,12 +155,12 @@ function addToCart(fruitName, quantity = 1) {
 
 	// 13. using the function `getCartItem`, STORE the result
 	//     into a constant/variable named `fruit`.
-
+	const fruit = getCartItem(fruitName);
 
 	// 14. IS `fruit` an object, or is it *undefined* (no match was found)?
-	if (false) { // <-- replace with the appropriate expression
-		// IF an OBJECT, CONTINUE...
-
+	if (fruit === undefined) { // <-- replace with the appropriate expression
+		return `Sorry, item not in stock`;
+		// IF an OBJECT, CONTINUE....
 		// 14.a) INCREMENT the quantity value on the object stored
 		//       in `fruit` (fruit.quantity) by the `quantity`
 		//       passed to this function and assign the value
