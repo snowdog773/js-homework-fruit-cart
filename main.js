@@ -102,17 +102,16 @@ function displayCart() {
 displayCart();
 
 
-
 function fruitByName(fruitName) {
 	// This FUNCTION takes a `fruitName` and returns a function
 	// to be used in an Array method later-on.
-
-	return function(fruit, index, fruits) {
+	return fruits.some((fruitName, fruits) => { fruitName === fruits.name }) //
 		// 8. COMPARE the NAME of the fruit (fruit.name) with
 		//    the `fruitName`parameter in the parent function and
 		//    return whether or not they match.
-	};
-}
+	}
+	
+
 
 
 
