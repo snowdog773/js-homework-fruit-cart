@@ -168,6 +168,7 @@ function addToCart(fruitName, quantity = 1) {
 		//       to a variable named `newQuantity`.
 		else if (fruit !== undefined ){
 			let newQuantity = fruit.quantity + quantity;
+			fruit.quantity = newQuantity;
 		// 14.b) OUTPUT to the console how many of `fruitName` are in the cart.
 			console.log(`${fruitName} : ${newQuantity}`);}
 	 else { 
@@ -199,7 +200,7 @@ addToCart("strawberry");
 
 // 15. Define `fruitName` and `quantity` PARAMETERS where the
 //     default for `quantity` is 1.
-function removeFromCart() {
+function removeFromCart(fruitName, quantity = 1) {
 	// 16. STORE a cart item using the function getCartItem into
 	//     a constant/variable named `fruit`.
 
