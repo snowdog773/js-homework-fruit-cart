@@ -181,7 +181,7 @@ function addToCart(fruitName, quantity = 1) {
 		cart.push({name : fruitName, quantity : quantity });
 
 		// 14.d) OUTPUT to the console how many of `fruitName` are in the cart.
-		displayCart();
+		console.log(`${fruitName} : ${quantity}`);
 	}
 }
 // *BONUS*
@@ -203,32 +203,40 @@ addToCart("strawberry");
 function removeFromCart(fruitName, quantity = 1) {
 	// 16. STORE a cart item using the function getCartItem into
 	//     a constant/variable named `fruit`.
-
+		const fruit = getCartItem(fruitName);
 	// 17. IS `fruit` an object, or is it *undefined* (no match was found)?
-	if (true) { // <-- replace
+	if (fruit === undefined) { console.log(`Sorry, ${fruitName} is not in the cart`);
+	return;}
 		// IF an OBJECT, CONTINUE...
-
+	else {
+		let newQuantity = fruit.quantity - quantity;
+		fruit.quantity = newQuantity;
+	
 		// 17.a) DECREMENT fruit.quantity by the `quantity`
 		//       passed to this function and store the value into
 		//       a new variable/constant named `newQuantity`.
 
 		// 17.b) IS the `newQuantity` LESS THAN OR EQUAL TO zero (0)?
 		//       if so, we should probably remove it from the cart entirely!
-		if (true) { // <-- replace
+		if ( newQuantity <= 0) {
+	
+			// - replace
 			// IF SO, CONTINUE...
 
 			// 17.b.i) find the INDEX of our `fruit` and store it into a variable/constant.
 			//         (hint: cart.indexOf will do just fine...)
-			
-			// 17.b.ii) REMOVE (*splice*) the fruit from the cart using the known index.
+			let position = cart.indexOf(fruit);
 
+			// 17.b.ii) REMOVE (*splice*) the fruit from the cart using the known index.
+			cart.splice(position, 1);
 			// 17.b.iii) OUTPUT to the console there are no more `fruitName` left...
+			console.log(`There are no ${fruitName}s left in the cart.`);
 		} else {
 			// OTHERWISE, since `newQuantity` is greater than zero:
-
+				console.log(`${quantity} ${fruitName} removed. ${newQuantity} left in the cart.`)
 			// 17.b.iv) OUTPUT to the console how many of `fruitName` was removed, and how many are remaining:
 		}
-	} else {
+	
 		// OTHERWISE, since `fruit` is undefined:
 		
 		// 17.c) OUTPUT to the console that no item named `fruitName` was found.
@@ -236,33 +244,35 @@ function removeFromCart(fruitName, quantity = 1) {
 }
 
 // TEST
-// removeFromCart("strawberry");
+removeFromCart("strawberry");
 
 function getTotal() {
 	// 18. DECLARE and ASSIGN zero (0) to a variable named `total`
 	let total = 0;
+	let totalItems = 0;
 	
 	// 19. FOR EACH item in our `cart`, get the `quantity` (item.quantity)
 	//     and then multiply it by the price of the fruit.
-	cart.forEach(function(fruit, index, fruits) {
+	cart.forEach(function(cart) {
 		// However, the price of the fruit is stored in the `fruits`
 		// array and not our `cart`! We must get the fruit item
 		// (getFruit(name)) from `fruits` and use its `price` property.
-		//
+			
 		// INCREMENT `total` by the `quantity` multiplied by the `price`
 		// fetched from the `fruits` array.
+		total = total + ( cart.quantity * getFruit(cart.name).price );
+		totalItems = totalItems + cart.quantity;
 	});
-
+	
 	// 20. DIVIDE `total` by 100 (to convert to pounds from pennies)
 	//     and assign this new number back to `total`.
-
+	total = (total / 100).toFixed(2);
+	// total.toFixed(2);
 	// 21. Next, use .toFixed(2) to force the number of decimal places
 	//     and assign back to `total`.
-
 	// 22. OUTPUT to the console the total price for X items is Y pounds.
-
+console.log(`The total price for ${totalItems} items is £${total}`);
 	// 23. RETURN the total price.
 }
 
-// TEST
-// getTotal();
+getTotal();
