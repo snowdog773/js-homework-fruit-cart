@@ -59,7 +59,7 @@ function displayFruits() {
 	const lines = fruits.map(function(fruits) {
 		// 1. Use the `price` on `fruit` to convert from pennies to pounds (/ 100) and
 		//    STORE the value in a VARIABLE called `cost`.
-            cost = (fruits.price / 100).toFixed(2);
+         let cost = (fruits.price / 100).toFixed(2);
 		// 3. use .toFixed(2) on `cost` and STORE the result back into `cost`
 		// 4. RETURN a template string containing the name of the fruit and its price
 		return `${fruits.name} : £${cost}`;
@@ -159,24 +159,26 @@ function addToCart(fruitName, quantity = 1) {
 
 	// 14. IS `fruit` an object, or is it *undefined* (no match was found)?
 	if (fruit === undefined) { // <-- replace with the appropriate expression
-		return `Sorry, item not in stock`;
+			return;
 		// IF an OBJECT, CONTINUE....
 		// 14.a) INCREMENT the quantity value on the object stored
 		//       in `fruit` (fruit.quantity) by the `quantity`
 		//       passed to this function and assign the value
 		//       to a variable named `newQuantity`.
-
+			let newQuantity = fruit.quantity + quantity;
 		// 14.b) OUTPUT to the console how many of `fruitName` are in the cart.
-	} else {
+			console.log(`${fruitName} : ${newQuantity}`);
+	} else { cart.quantity++;
 		// OTHERWISE
 
 		// 14.c) We should PUSH a new OBJECT to the
 		//       `cart`. This OBJECT should have a name (which
 		//       matches `fruitName`) and a quantity (which
 		//       equals the `quantity` parameter) as keys.
-		cart.push();
+		cart.push({name : fruitName, quantity : quantity });
 
 		// 14.d) OUTPUT to the console how many of `fruitName` are in the cart.
+		displayCart();
 	}
 }
 // *BONUS*
@@ -186,8 +188,8 @@ function addToCart(fruitName, quantity = 1) {
 // **
 
 // TEST
-// addToCart("pineapple", 2);
-// addToCart("avocado");
+addToCart("pineapple", 2);
+addToCart("avocado");
 
 
 
