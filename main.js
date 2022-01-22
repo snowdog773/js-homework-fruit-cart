@@ -158,17 +158,19 @@ function addToCart(fruitName, quantity = 1) {
 	const fruit = getCartItem(fruitName);
 
 	// 14. IS `fruit` an object, or is it *undefined* (no match was found)?
-	if (fruit === undefined) { // <-- replace with the appropriate expression
-			return;
+	if (getFruit(fruitName) === undefined) { // <-- replace with the appropriate expression
+		console.log(`sorry, ${fruitName} not recognised`);
+			return;}
 		// IF an OBJECT, CONTINUE....
 		// 14.a) INCREMENT the quantity value on the object stored
 		//       in `fruit` (fruit.quantity) by the `quantity`
 		//       passed to this function and assign the value
 		//       to a variable named `newQuantity`.
+		else if (fruit !== undefined ){
 			let newQuantity = fruit.quantity + quantity;
 		// 14.b) OUTPUT to the console how many of `fruitName` are in the cart.
-			console.log(`${fruitName} : ${newQuantity}`);
-	} else { cart.quantity++;
+			console.log(`${fruitName} : ${newQuantity}`);}
+	 else { 
 		// OTHERWISE
 
 		// 14.c) We should PUSH a new OBJECT to the
@@ -190,6 +192,8 @@ function addToCart(fruitName, quantity = 1) {
 // TEST
 addToCart("pineapple", 2);
 addToCart("avocado");
+addToCart("chicken");
+addToCart("strawberry");
 
 
 
