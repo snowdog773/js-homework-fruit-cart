@@ -63,8 +63,9 @@ function displayFruits() {
 		// 3. use .toFixed(2) on `cost` and STORE the result back into `cost`
 		// 4. RETURN a template string containing the name of the fruit and its price
 			let space = "";
-			if (fruit.name.length < 7) {space = "\t\t\t"}
-			else {space ="\t\t"};
+			if (fruit.name.length > 10) {space = "\t"}
+			else if (fruit.name.length > 6) {space ="\t\t"}
+			else {space = "\t\t\t"};
 			return `${fruit.name} ${space}: £${cost}`;
         
 	});
@@ -88,11 +89,10 @@ function displayCart() {
 
     	const cartLines = cart.map(function(fruit) {
 		let space = "";
-			if 
-				(fruit.name.length < 7) 
-				{space = "\t\t\t"}
-			else
-				{space ="\t\t"};
+			
+		if (fruit.name.length > 10) {space = "\t"}
+			else if (fruit.name.length > 6) {space ="\t\t"}
+			else {space = "\t\t\t"};
 
         return `${fruit.name} ${space}: ${fruit.quantity}`;
     });
