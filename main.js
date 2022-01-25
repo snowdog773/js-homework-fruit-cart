@@ -330,7 +330,7 @@ function removeFromInventory(fruit) {
 		displayFruits();
 	}
 	else {
-		fruits.splice(check, 1);
+		fruits.splice(fruits.indexOf(check), 1);
 		console.log(`${fruit} deleted.`);
 		displayFruits();
 	}
