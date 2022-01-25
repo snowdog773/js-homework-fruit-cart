@@ -56,21 +56,24 @@ function displayFruits() {
 	// MAP each fruit in the `fruits` array into a string (hint: template string)
 	// and be sure to include the name of the fruit as well as the price in pounds!!
 	// STORE the resulting array into a constant/variable named `lines`.
-	const lines = fruits.map(function(fruits) {
+			const lines = fruits.map(function(fruit) {
 		// 1. Use the `price` on `fruit` to convert from pennies to pounds (/ 100) and
 		//    STORE the value in a VARIABLE called `cost`.
-         let cost = (fruits.price / 100).toFixed(2);
+        	let cost = (fruit.price / 100).toFixed(2);
 		// 3. use .toFixed(2) on `cost` and STORE the result back into `cost`
 		// 4. RETURN a template string containing the name of the fruit and its price
-		return `${fruits.name} : £${cost}`;
+			let space = "";
+			if (fruit.name.length < 7) {space = "\t\t\t"}
+			else {space ="\t\t"};
+			return `${fruit.name} ${space}: £${cost}`;
         
 	});
 	// 5. Use the array method `join` and combine the strings in the
 	//    `lines` array with the *new line* character and STORE it
 	//    into a variable/constant named `output`.
-const output = lines.join(NEWLINE);
+	const output = lines.join(NEWLINE);
 	// 6. OUTPUT the `output` to the console...
-console.log(output);
+	console.log(output);
 }
 // CALL `displayFruits` and test it out.
 displayFruits();
@@ -78,23 +81,30 @@ displayFruits();
 
 
 function displayCart() {
-	console.log(`**SHOPPING CART**`);
+		console.log(`**SHOPPING CART**`);
 	// 7. IMPLEMENT something similar to the previous function.
 	//    We want to MAP the *`cart`* items to strings displaying
 	//    the `name` of the fruit and the `quantity` (how many).
 
-    const cartLines = cart.map(function(cart) {
-        return `${cart.name} : ${cart.quantity}`;
+    	const cartLines = cart.map(function(fruit) {
+		let space = "";
+			if 
+				(fruit.name.length < 7) 
+				{space = "\t\t\t"}
+			else
+				{space ="\t\t"};
+
+        return `${fruit.name} ${space}: ${fruit.quantity}`;
     });
 
 	//    Use the `join` array method to combine these strings
 	//    together with a *new line* character.
 
-    const cartOutput = cartLines.join(NEWLINE);
+    	const cartOutput = cartLines.join(NEWLINE);
 
 	//    OUTPUT this string to the console.
 
-    console.log(cartOutput);
+console.log(cartOutput);
 
 }
 
@@ -105,8 +115,8 @@ displayCart();
 function fruitByName(fruitName) {
 	// This FUNCTION takes a `fruitName` and returns a function
 	// to be used in an Array method later-on.
-	return function(fruits) {
-		return fruitName === fruits.name;
+		return function(fruit) {
+		return fruitName === fruit.name;
 
 	}
 		// 8. COMPARE the NAME of the fruit (fruit.name) with
@@ -148,6 +158,7 @@ console.log(getCartItem("strawberry"));
 
 
 
+
 function addToCart(fruitName, quantity = 1) {
 	// When we add, sometimes we might already have the fruit
 	// in the cart that we're looking for, so all we need to
@@ -160,28 +171,27 @@ function addToCart(fruitName, quantity = 1) {
 	// 14. IS `fruit` an object, or is it *undefined* (no match was found)?
 	if (getFruit(fruitName) === undefined) { // <-- replace with the appropriate expression
 		console.log(`sorry, ${fruitName} not recognised`);
-			return;}
+		return;}
 		// IF an OBJECT, CONTINUE....
 		// 14.a) INCREMENT the quantity value on the object stored
 		//       in `fruit` (fruit.quantity) by the `quantity`
 		//       passed to this function and assign the value
 		//       to a variable named `newQuantity`.
-		else if (fruit !== undefined ){
-			let newQuantity = fruit.quantity + quantity;
-			fruit.quantity = newQuantity;
+		else if (fruit){
+			const newQuantity = fruit.quantity += quantity;
 		// 14.b) OUTPUT to the console how many of `fruitName` are in the cart.
-			console.log(`${fruitName} : ${newQuantity}`);}
-	 else { 
+			console.log(`${fruitName} : \t\t ${newQuantity}`);}
+	 	else { 
 		// OTHERWISE
-
+			cart.push({name : fruitName, quantity : quantity });
 		// 14.c) We should PUSH a new OBJECT to the
 		//       `cart`. This OBJECT should have a name (which
 		//       matches `fruitName`) and a quantity (which
 		//       equals the `quantity` parameter) as keys.
-		cart.push({name : fruitName, quantity : quantity });
+			
 
 		// 14.d) OUTPUT to the console how many of `fruitName` are in the cart.
-		console.log(`${fruitName} : ${quantity}`);
+			console.log(`${fruitName} : ${quantity}`);
 	}
 }
 // *BONUS*
@@ -205,43 +215,51 @@ function removeFromCart(fruitName, quantity = 1) {
 	//     a constant/variable named `fruit`.
 		const fruit = getCartItem(fruitName);
 	// 17. IS `fruit` an object, or is it *undefined* (no match was found)?
-	if (fruit === undefined) { console.log(`Sorry, ${fruitName} is not in the cart`);
-	return;}
+		if 
+			(fruit === undefined) 
+			{ console.log(`Sorry, ${fruitName} is not in the cart`)}
 		// IF an OBJECT, CONTINUE...
-	else {
-		let newQuantity = fruit.quantity - quantity;
-		fruit.quantity = newQuantity;
-	
+		else {
+		const newQuantity = fruit.quantity -= quantity
+		// nested if else statement below	
+			if ( newQuantity <= 0) {
+				const position = cart.indexOf(fruit);
+				cart.splice(position, 1);
+				console.log(`There are no ${fruitName}s left in the cart.`);
+			}
+				
+			else {
+				console.log(`${quantity} ${fruitName} removed. ${newQuantity} left in the cart.`)
+			}
+		}
+	}
 		// 17.a) DECREMENT fruit.quantity by the `quantity`
 		//       passed to this function and store the value into
 		//       a new variable/constant named `newQuantity`.
 
 		// 17.b) IS the `newQuantity` LESS THAN OR EQUAL TO zero (0)?
 		//       if so, we should probably remove it from the cart entirely!
-		if ( newQuantity <= 0) {
+		
 	
 			// - replace
 			// IF SO, CONTINUE...
 
 			// 17.b.i) find the INDEX of our `fruit` and store it into a variable/constant.
 			//         (hint: cart.indexOf will do just fine...)
-			let position = cart.indexOf(fruit);
+			
 
 			// 17.b.ii) REMOVE (*splice*) the fruit from the cart using the known index.
-			cart.splice(position, 1);
+			
 			// 17.b.iii) OUTPUT to the console there are no more `fruitName` left...
-			console.log(`There are no ${fruitName}s left in the cart.`);
-		} else {
+	
 			// OTHERWISE, since `newQuantity` is greater than zero:
-				console.log(`${quantity} ${fruitName} removed. ${newQuantity} left in the cart.`)
-			// 17.b.iv) OUTPUT to the console how many of `fruitName` was removed, and how many are remaining:
-		}
+	
+			// 17.b.iv) OUTPUT to the console how many of `fruitName` was removed, and how many ar
 	
 		// OTHERWISE, since `fruit` is undefined:
 		
 		// 17.c) OUTPUT to the console that no item named `fruitName` was found.
-	}
-}
+
 
 // TEST
 removeFromCart("strawberry");
@@ -253,15 +271,15 @@ function getTotal() {
 	
 	// 19. FOR EACH item in our `cart`, get the `quantity` (item.quantity)
 	//     and then multiply it by the price of the fruit.
-	cart.forEach(function(cart) {
+	cart.forEach(function(fruit) {
 		// However, the price of the fruit is stored in the `fruits`
 		// array and not our `cart`! We must get the fruit item
 		// (getFruit(name)) from `fruits` and use its `price` property.
 			
 		// INCREMENT `total` by the `quantity` multiplied by the `price`
 		// fetched from the `fruits` array.
-		total = total + ( cart.quantity * getFruit(cart.name).price );
-		totalItems = totalItems + cart.quantity;
+		total += ( fruit.quantity * getFruit(fruit.name).price );
+		totalItems += fruit.quantity;
 	});
 	
 	// 20. DIVIDE `total` by 100 (to convert to pounds from pennies)
@@ -276,3 +294,58 @@ console.log(`The total price for ${totalItems} items is £${total}`);
 }
 
 getTotal();
+
+console.log(`Couple of extra functions just for shits and giggles. When using addToInventory, input your price in pence.`);
+
+function addToInventory(fruit, price = 0) {
+
+	if 
+		(getFruit(fruit)) 
+		{console.log(`That item is already part of the inventory. Please use changePrice to alter pricing.`)
+		return;}
+	else
+		{fruits.push({name: fruit, price})
+	};
+
+	if (price === 0) {
+		displayFruits();
+		console.log(`You haven't set a price so it has defaulted to 0. Please use changePrice to alter pricing.`);
+
+	}
+	else {
+		displayFruits();
+	}
+	
+}
+
+//test
+addToInventory("peach", 99);
+
+function removeFromInventory(fruit) {
+	// check if product is part of inventory
+	const check = getFruit(fruit);
+	//if else statement to process valid requests and ignore invalid requests
+	if (check === undefined) {
+		console.log(`${fruit} not recognised. Please input a valid item.`);
+		displayFruits();
+	}
+	else {
+		fruits.splice(check, 1);
+		console.log(`${fruit} deleted.`);
+		displayFruits();
+	}
+	
+}
+
+function changePrice(fruit, price = 99999) {
+	//check for a valid input
+	const check = getFruit(fruit);
+	//if else to change valid inputs and reject invalids
+	if (check) {
+		check.price = price;
+	}
+	else {
+		console.log(`Sorry, ${fruit} is not currently a shop item, please use addToInventory to create a new line.`)
+	};
+	displayFruits();
+}
