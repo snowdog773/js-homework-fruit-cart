@@ -348,4 +348,10 @@ function changePrice(fruit, price = 99999) {
 		console.log(`Sorry, ${fruit} is not currently a shop item, please use addToInventory to create a new line.`)
 	};
 	displayFruits();
+	if (price === 99999) {
+		console.log(`Price not entered, defaulted to £999,99.`)
+	}
+	else {
+		return;
+	}
 }
